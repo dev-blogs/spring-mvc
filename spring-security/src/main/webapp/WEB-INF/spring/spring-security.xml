@@ -14,12 +14,15 @@
     </http>
     
     <authentication-manager>
-        <authentication-provider>
+    	<authentication-provider user-service-ref="customUserDetailsService"/>
+        <!-- <authentication-provider>
             <user-service>
                 <user name="user" password="user" authorities="ROLE_USER" />
                 <user name="admin" password="admin" authorities="ROLE_ADMIN" />
             </user-service>
-        </authentication-provider>
+        </authentication-provider> -->
     </authentication-manager>
+    
+    <beans:bean id="customUserDetailsService" class="com.devblogs.service.impl.UserServiceImpl" />
     
 </beans:beans>
