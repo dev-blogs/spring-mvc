@@ -13,6 +13,7 @@
 	</c:if>
 
 	Message : <b>${message}</b></br></br>
+	<b>List of users</b></br></br>
 	
 	<c:if test="${not empty users}">
 	    	<table>
