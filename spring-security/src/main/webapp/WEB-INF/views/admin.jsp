@@ -12,6 +12,31 @@
 		</h3>
 	</c:if>
 
-	Message : <b>${message}</b>
+	Message : <b>${message}</b></br></br>
+	
+	<c:if test="${not empty users}">
+	    	<table>
+	    		<thead>
+	    			<tr>
+	    				<th>ID</th>
+	    				<th>Login</th>
+	    				<th>Password</th>
+	    				<th>Date</th>
+	    				<th>Description</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<c:forEach items="${users}" var="user">
+	    				<tr>
+	    					<td>${user.id}</td>
+	    					<td>${user.login}</td>
+	    					<td>${user.password}</td>
+	    					<td>${user.dateOfRegistration}</td>
+	    					<td>${user.description}</td>
+	    				</tr>
+	    			</c:forEach>
+	    		</tbody>
+	    	</table>
+	    </c:if>
 </body>
 </html>

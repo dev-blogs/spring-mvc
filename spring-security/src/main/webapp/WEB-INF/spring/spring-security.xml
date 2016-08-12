@@ -23,6 +23,6 @@
         </authentication-provider> -->
     </authentication-manager>
     
-    <beans:bean id="customUserDetailsService" class="com.devblogs.service.impl.UserServiceImpl" />
+    <beans:bean id="customUserDetailsService" class="com.devblogs.service.impl.UserDetailsServiceImpl" />
     
 </beans:beans>
