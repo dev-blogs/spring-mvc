@@ -1,6 +1,22 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
+<style>
+table {
+	width: 200px;
+	font-family: Helvetica, sans-serif;
+	font-size: 14px;
+}
+h1,h2,h3 {
+	font-family: Helvetica, sans-serif;
+}
+#box {
+	border: 1px solid #000;
+}
+#head {
+	background: #E6E5E5;
+}
+</style>
 <body>
     <c:url value="/j_spring_security_logout" var="logoutUrl" />
     <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -18,8 +34,8 @@
     
     <sec:authorize access="isAuthenticated()">
 	    <c:if test="${not empty providers}">
-	    	<table>
-	    		<thead>
+	    	<table id="box">
+	    		<thead id="head">
 	    			<tr>
 	    				<th>ID</th>
 	    				<th>Name</th>
@@ -27,7 +43,7 @@
 	    		</thead>
 	    		<tbody>
 	    			<c:forEach items="${providers}" var="provider">
-	    				<tr>
+	    				<tr align="center">
 	    					<td>${provider.id}</td>
 	    					<td>${provider.name}</td>
 	    				</tr>

@@ -1,6 +1,22 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>
 <html>
+<style>
+table {
+	width: 800px;
+	font-family: Helvetica, sans-serif;
+	font-size: 14px;
+}
+h1,h2,h3,#fontstyle {
+	font-family: Helvetica, sans-serif;
+}
+#box {
+	border: 1px solid #000;
+}
+#head {
+	background: #E6E5E5;
+}
+</style>
 <body>
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
 	<c:url value="/providers" var="providerListPage" />
@@ -12,23 +28,23 @@
 		</h3>
 	</c:if>
 
-	Message : <b>${message}</b></br></br>
-	<b>List of users</b></br></br>
+	<div id="fontstyle">Message : <b>${message}</b></div>
+	<h3>List of users</h3>
 	
 	<c:if test="${not empty users}">
-	    	<table>
-	    		<thead>
+	    	<table id="box">
+	    		<thead id="head">
 	    			<tr>
 	    				<th>ID</th>
 	    				<th>Login</th>
 	    				<th>Password</th>
-	    				<th>Date</th>
+	    				<th>Date of registration</th>
 	    				<th>Description</th>
 	    			</tr>
 	    		</thead>
 	    		<tbody>
 	    			<c:forEach items="${users}" var="user">
-	    				<tr>
+	    				<tr align="center">
 	    					<td>${user.id}</td>
 	    					<td>${user.login}</td>
 	    					<td>${user.password}</td>
