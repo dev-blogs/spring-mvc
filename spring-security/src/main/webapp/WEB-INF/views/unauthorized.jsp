@@ -3,6 +3,7 @@
 <style>
 h1,h2,h3,#fontstyle {
 	font-family: Helvetica, sans-serif;
+	font-size: 14px;
 }
 #head {
 	background: #E6E5E5;
