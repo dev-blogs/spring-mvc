@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.devblogs.model.Provider;
 import com.devblogs.service.ProviderService;
 
-@RequestMapping("/providers")
+@RequestMapping(value = {"/", "/providers"})
 @Controller
 public class ProviderController {
 	final Logger logger = LoggerFactory.getLogger(ProviderController.class);
