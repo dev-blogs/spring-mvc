@@ -55,7 +55,7 @@
                             </div>
                         </form>
 						<div class="form-actions">
-							<input type="submit" onclick="window.open('${registration}')" class="btn btn-block btn-primary btn-default" value="${labelRegistration}">
+							<input type="submit" onclick="window.open('${registration}', '_self')" class="btn btn-block btn-primary btn-default" value="${labelRegistration}">
 						</div>
                     </div>
                 </div>
