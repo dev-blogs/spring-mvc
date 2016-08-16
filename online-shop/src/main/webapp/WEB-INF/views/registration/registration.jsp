@@ -13,7 +13,7 @@
 		<spring:theme code="styleSheet" var="app_css"/>
 		<spring:url value="/static/css/registration.css" var="standard_css_url"/>
 		<link rel="stylesheet" type="text/css" media="screen" href="${standard_css_url}" />
-		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value='/static/css/app.css' />" />
+		
 
 		<!-- Website Font style -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
