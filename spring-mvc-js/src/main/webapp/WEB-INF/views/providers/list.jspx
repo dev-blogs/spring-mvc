@@ -54,6 +54,7 @@
     		</tbody>
     	</table>
     </c:if>
+    <br></br>
     <form:form id="contactUpdateForm" method="post">
     	<label>
             Choose date
