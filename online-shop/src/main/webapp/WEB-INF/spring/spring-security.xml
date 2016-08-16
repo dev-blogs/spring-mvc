@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+    
+    <http use-expressions="true">
+        <!-- <intercept-url pattern='/*' access='permitAll' /> -->
+        <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/providers" access="isAuthenticated()" />
+        <form-login login-page="/login" authentication-failure-url="/unauthorized" default-target-url="/providers" />
+        <access-denied-handler error-page="/accessDenied"/>
+        <logout logout-success-url="/login"/>
+    </http>
+    
+    <authentication-manager>
+    	<authentication-provider user-service-ref="customUserDetailsService"/>
+        <!-- <authentication-provider>
+            <user-service>
+                <user name="user" password="user" authorities="ROLE_USER" />
+                <user name="admin" password="admin" authorities="ROLE_ADMIN" />
+            </user-service>
+        </authentication-provider> -->
+    </authentication-manager>
+    
+    <beans:bean id="customUserDetailsService" class="com.devblogs.service.impl.UserDetailsServiceImpl" />
+    
+</beans:beans>
