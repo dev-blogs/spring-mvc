@@ -11,7 +11,9 @@
     <jsp:directive.page pageEncoding="UTF-8" /> 
     
 	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>List of providers with javascript support</title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=8" />
         
         <spring:url value="/resources/js/jquery-1.7.1.js" var="jquery_url" />
@@ -34,7 +36,7 @@
     });
     
     </script>
-    <h1>Provider Listing</h1>
+    <h1>List of providers with javascript support</h1>
     
     <c:if test="${not empty providers}">
     	<table>
