@@ -21,6 +21,14 @@ public class Role {
 	private String userRole;
 	private String description;
 	private Set<User> users = new HashSet<User>();
+	
+	public Role() {
+	}
+	
+	public Role(String userRole, String description) {
+		this.userRole = userRole;
+		this.description = description;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,7 +59,7 @@ public class Role {
 		this.description = description;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "users_roles",
 		joinColumns = {@JoinColumn(name = "roles_id")},
 		inverseJoinColumns = {@JoinColumn(name = "users_id")}

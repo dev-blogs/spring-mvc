@@ -47,7 +47,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(readOnly = false)
 	public User save(User user) {
-		return null;
+		if (user.getId() == null) {
+            log.info("Inserting new user");
+            em.persist(user);
+        } else {
+            em.merge(user);
+            log.info("Updating existing user");
+        }
+        log.info("User saved with id: " + user.getId());
+        return user;
 	}
 
 	@Override

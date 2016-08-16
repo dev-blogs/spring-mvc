@@ -3,6 +3,7 @@ package com.devblogs.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "users")
@@ -21,7 +26,7 @@ public class User {
 	private Long id;
 	private String login;
 	private String password;
-	private Date dateOfRegistration;
+	private Date registrationDate;
 	private String description;
 	private Set<Role> roles = new HashSet<Role>();
 
@@ -55,12 +60,14 @@ public class User {
 	}
 
 	@Column(name = "date_of_registration")
-	public Date getDateOfRegistration() {
-		return dateOfRegistration;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	public Date getRegistrationDate() {
+		return registrationDate;
 	}
 
-	public void setDateOfRegistration(Date dateOfRegistration) {
-		this.dateOfRegistration = dateOfRegistration;
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 
 	@Column(name = "description")
@@ -72,7 +79,7 @@ public class User {
 		this.description = description;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "users_roles",
 		joinColumns = {@JoinColumn(name = "users_id")},
 		inverseJoinColumns = {@JoinColumn(name = "roles_id")}

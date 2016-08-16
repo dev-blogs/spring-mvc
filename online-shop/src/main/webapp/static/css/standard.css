@@ -29,6 +29,17 @@
 	border: 1px solid #000;
 }
 
+#registration-box {
+	width: 550px;
+	height: 350px;
+	padding: 20px;
+	margin: 100px auto;
+	background: #fff;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border: 1px solid #000;
+}
+
 #login-button {
 	margin-top: 10px;
 }

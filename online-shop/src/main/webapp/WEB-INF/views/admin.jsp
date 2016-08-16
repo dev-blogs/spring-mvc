@@ -38,7 +38,7 @@
 	    					<td>${user.id}</td>
 	    					<td>${user.login}</td>
 	    					<td>${user.password}</td>
-	    					<td>${user.dateOfRegistration}</td>
+	    					<td>${user.registrationDate}</td>
 	    					<td>${user.description}</td>
 	    				</tr>
 	    			</c:forEach>
