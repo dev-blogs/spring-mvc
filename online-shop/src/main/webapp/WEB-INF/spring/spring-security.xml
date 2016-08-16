@@ -6,6 +6,7 @@
     
     <http use-expressions="true">
         <!-- <intercept-url pattern='/*' access='permitAll' /> -->
+        <intercept-url pattern="/registration" access='permitAll' />
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/providers" access="isAuthenticated()" />
         <form-login login-page="/login" authentication-failure-url="/unauthorized" default-target-url="/providers" />

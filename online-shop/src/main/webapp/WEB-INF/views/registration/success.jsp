@@ -1,0 +1,1 @@
+Registration has been successful
