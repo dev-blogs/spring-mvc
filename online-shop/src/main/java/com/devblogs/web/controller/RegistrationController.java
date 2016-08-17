@@ -56,6 +56,11 @@ public class RegistrationController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String registration(@Valid User user, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
 		logger.info("Registration");
+		if (!user.getPassword().equals(user.getConfirm())) {
+			uiModel.addAttribute("message", new Message("alert alert-danger", messageSource.getMessage("password_match_fail", new Object[] {}, locale)));
+			uiModel.addAttribute("user", user);
+			return "registration/registrationForm";
+		}
 		if (bindingResult.hasErrors()) {
 			uiModel.addAttribute("message", new Message("alert alert-danger", messageSource.getMessage("user_save_fail", new Object[] {}, locale)));
 			uiModel.addAttribute("user", user);

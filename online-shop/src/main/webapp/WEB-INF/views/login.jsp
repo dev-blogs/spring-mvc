@@ -10,6 +10,7 @@
         <spring:message code="placeholder_login" var="placeholderLogin"/>
         <spring:message code="placeholder_password" var="placeholderPassword"/>
         <spring:message code="label_registration" var="labelRegistration"/>
+        <spring:message code="label_username_invalid" var="labelUsernameInvalid"/>
         <spring:message code="label_ru_RU" var="labelRuRu"/>
 		<spring:message code="label_en_US" var="labelEnUs"/>
 		
@@ -33,7 +34,7 @@
                         <form action="${loginUrl}" method="post" class="form-horizontal">
                             <c:if test="${param.error != null}">
                                 <div class="alert alert-danger">
-                                    <p>Invalid username and password.</p>
+                                    <p>${labelUsernameInvalid}</p>
                                 </div>
                             </c:if>
                             <c:if test="${param.logout != null}">

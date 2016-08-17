@@ -70,7 +70,10 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="name" id="name"  placeholder="${placeHolderName}"/>
+									<form:input path="name" type="text" class="form-control" name="name" id="name"  placeholder="${placeHolderName}"/>
+								</div>
+								<div>
+									<form:errors path="name" cssClass="alert-danger" />
 								</div>
 							</div>
 						</div>
@@ -80,9 +83,12 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="${placeHolderEmail}"/>
+									<form:input path="email" type="text" class="form-control" name="email" id="email"  placeholder="${placeHolderEmail}"/>
 								</div>
-							</div>
+								<div>
+									<form:errors path="email" cssClass="alert-danger" />
+								</div>
+							</div>							
 						</div>
 
 						<div class="form-group">

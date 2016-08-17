@@ -17,8 +17,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,6 +31,7 @@ public class User {
 	private Long id;
 	private String login;
 	private String password;
+	private String confirm;
 	private String name;
 	private String email;
 	private Date registrationDate;
@@ -65,6 +69,17 @@ public class User {
 		this.password = password;
 	}
 	
+	@Transient
+	public String getConfirm() {
+		return confirm;
+	}
+
+	public void setConfirm(String confirm) {
+		this.confirm = confirm;
+	}
+
+	@NotEmpty(message="{validation.username.NotEmpty.message}")
+	@Size(min=2, max=40, message="{validation.username.Size.message}")
 	@Column(name = "user_name")
 	public String getName() {
 		return name;
@@ -74,6 +89,9 @@ public class User {
 		this.name = name;
 	}
 
+	@NotEmpty(message="{validation.email.NotEmpty.message}")
+	@Email(message="{validation.login.email}")
+	@Pattern(regexp=".+@.+\\..+", message="{validation.login.email}")
 	@Column(name = "email")
 	public String getEmail() {
 		return email;
