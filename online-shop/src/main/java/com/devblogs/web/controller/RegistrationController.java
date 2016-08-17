@@ -69,7 +69,18 @@ public class RegistrationController {
 		user.setRegistrationDate(new Date());
 		Role role = roleService.findById(2l);
 		user.getRoles().add(role);
-		User save = userService.save(user);
+		
+		try {
+			userService.save(user);
+		} catch (javax.persistence.PersistenceException e) {
+			uiModel.addAttribute("message", new Message("alert alert-danger", messageSource.getMessage("login_exists_fail", new Object[] {}, locale)));
+			uiModel.addAttribute("user", user);
+			return "registration/registrationForm";
+		}
+		
+		uiModel.asMap().clear();
+		uiModel.addAttribute("message", new Message("success", messageSource.getMessage("user_save_success", new Object[] {}, locale)));
+		
 		return "registration/success";
 	}
 }
