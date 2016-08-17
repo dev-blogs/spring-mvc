@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@page session="true"%>
 <html>
@@ -41,6 +41,7 @@
 		<spring:message code="reg_button_registration" var="buttonRegistration"/>
 		<spring:message code="reg_label_back" var="buttonBack"/>
 		
+		<c:url var="registrationUrl" value='/registration'/>
 		<c:url var="loginPage" value="/" />
 
 		<title>${labelCompanyName}</title>
@@ -59,10 +60,13 @@
 	               	</div>
 	            </div> 
 				<div class="main-login main-center">
-					<form class="form-horizontal" id="loginForm" method="post" action="<c:url value='/registration'/>">
+					<c:if test="${not empty message}">
+            			<div id="message" class="${message.type}">${message.message}</div>
+        			</c:if>
+					<form:form class="form-horizontal" id="loginForm" method="post" action="${registrationUrl}" modelAttribute="user">
 						
 						<div class="form-group">
-							<label for="name" class="cols-sm-2 control-label">${labelYourName}</label>
+							<label  for="name" class="cols-sm-2 control-label">${labelYourName}</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
@@ -86,7 +90,10 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="login" id="login"  placeholder="${placeHolderLogin}"/>
+									<form:input path="login" type="text" id="login" class="form-control" placeholder="${placeHolderLogin}"/>
+								</div>
+								<div>
+									<form:errors path="login" cssClass="alert-danger" />
 								</div>
 							</div>
 						</div>
@@ -118,7 +125,7 @@
 						<div class="form-group ">
 							<button type="button" id="registration_btn" onclick="window.open('${loginPage}', '_self')" class="btn btn-primary btn-lg btn-block login-button">${buttonBack}</button>
 						</div>
-					</form>
+					</form:form>
 				</div>
 			</div>
 		</div>

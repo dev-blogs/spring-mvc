@@ -17,7 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -43,6 +45,8 @@ public class User {
 		this.id = id;
 	}
 
+	@NotEmpty(message="{validation.login.NotEmpty.message}")
+	@Size(min=5, max=40, message="{validation.login.Size.message}")
 	@Column(name = "login")
 	public String getLogin() {
 		return login;

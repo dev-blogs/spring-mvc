@@ -16,19 +16,19 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
     <resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
 	
-	<!-- css -->
-	
 	<!-- register "global" interceptor beans to apply to all registered HandlerMappings -->
     <interceptors>
     	<beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang"/>
-        <beans:bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"/>
     </interceptors>
     
-    <!-- resolves localized <theme_name>.properties files in the classpath to allow for theme support -->
-    <beans:bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource"/>
-    
+	<!-- css -->
     <!-- store preferred theme configuration in a cookie -->
     <beans:bean id="themeResolver" class="org.springframework.web.servlet.theme.CookieThemeResolver" p:cookieName="theme" p:defaultThemeName="standard"/>
+    
+    <!-- Validation -->
+    <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    	<beans:property name="validationMessageSource" ref="messageSource"/>
+    </beans:bean>
     
     <!-- Internationalization -->
     <!-- Allows for mapping the DispatcherServlet to "/" by forwarding static resource requests to the container's default Servlet -->
@@ -43,7 +43,7 @@
     <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" p:cookieName="locale"/>
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<annotation-driven validator="validator"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jspx resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
