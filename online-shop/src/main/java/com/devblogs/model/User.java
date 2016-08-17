@@ -26,6 +26,8 @@ public class User {
 	private Long id;
 	private String login;
 	private String password;
+	private String name;
+	private String email;
 	private Date registrationDate;
 	private String description;
 	private Set<Role> roles = new HashSet<Role>();
@@ -57,6 +59,24 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	@Column(name = "user_name")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Column(name = "email")
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Column(name = "date_of_registration")
@@ -90,5 +110,10 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	
+	@Override
+	public String toString() {
+		return "user[id=" + this.id + ", login=" + this.login + ", name=" + this.name + ", email=" + this.email + ", registrationDate=" + this.registrationDate + ", description=" + this.description + "]";
 	}
 }
