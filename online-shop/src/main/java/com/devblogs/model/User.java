@@ -90,7 +90,6 @@ public class User {
 	}
 
 	@NotEmpty(message="{validation.email.NotEmpty.message}")
-	@Email(message="{validation.login.email}")
 	@Pattern(regexp=".+@.+\\..+", message="{validation.login.email}")
 	@Column(name = "email")
 	public String getEmail() {
