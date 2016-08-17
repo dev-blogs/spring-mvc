@@ -33,7 +33,7 @@
 		<spring:message code="reg_label_confirm" var="labelConfirm"/>
 		
 		<spring:message code="reg_ph_your_name" var="placeHolderName"/>
-		<spring:message code="reg_label_email" var="placeHolderEmail"/>
+		<spring:message code="reg_ph_email" var="placeHolderEmail"/>
 		<spring:message code="reg_ph_login" var="placeHolderLogin"/>
 		<spring:message code="reg_ph_password" var="placeHolderPassword"/>
 		<spring:message code="reg_ph_confirm" var="placeHolderConfirm"/>
