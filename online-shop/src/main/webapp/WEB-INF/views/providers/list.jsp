@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -17,22 +18,30 @@
 	
 	<link rel="icon" href="../../favicon.ico">
 	
-	<title>dev-blogs.com</title>
-	
 	<!-- Bootstrap core CSS -->
-	<link href="static/css/bootstrap.min.css" rel="stylesheet">
-	
+	<spring:url value="/static/css/bootstrap.min.css" var="bootstrap_min_css"/>
+	<link href="${bootstrap_min_css}"  rel="stylesheet"></link>
 	<!-- Custom styles for this template -->
-	<link href="static/css/offcanvas.css" rel="stylesheet">
+	<spring:url value="/static/css/offcanvas.css" var="offcanvas_css"/>
+	<link href="${offcanvas_css}"  rel="stylesheet"></link>
+	
+	<c:url value="/category/add" var="addCategoryUrl"/>
 	
 	<spring:message code="label_ru_RU" var="labelRuRu"/>
 	<spring:message code="label_en_US" var="labelEnUs"/>
 	
 	<spring:message code="main_page_label_projectName" var="mainPageLabelProjectName"/>
 	<spring:message code="main_page_label_home" var="mainPageLabelHome"/>
+	<spring:message code="main_page_label_add_item" var="mainPageLabelAddItem"/>
 	<spring:message code="main_page_label_orders" var="mainPageLabelOrders"/>
 	<spring:message code="main_page_label_users" var="mainPageLabelUsers"/>
 	<spring:message code="main_page_label_logout" var="mainPageLabelLogout"/>
+	<spring:message code="main_page_label_view_details" var="mainPageLabelViewDetails"/>
+	<spring:message code="main_page_label_cart" var="mainPageLabelCart"/>
+	<spring:message code="main_page_label_add_category" var="mainPageLabelAddCategory"/>
+	<spring:message code="main_page_label_add" var="mainPageLabelAdd"/>
+	
+	<title>${mainPageLabelProjectName}</title>
 </head>
 
 <body>
@@ -46,8 +55,13 @@
 			<a class="navbar-brand" href="#">${mainPageLabelProjectName}</a>
 			<ul class="nav navbar-nav">
 				<li class="nav-item active"><a class="nav-link" href="#">${mainPageLabelHome}</a></li>
-				<li class="nav-item"><a class="nav-link" href="#about">${mainPageLabelOrders}</a></li>
-				<li class="nav-item"><a class="nav-link" href="#contact">${mainPageLabelUsers}</a></li>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<li class="nav-item"><a class="nav-link" href="#">${mainPageLabelOrders}</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">${mainPageLabelUsers}</a></li>
+				</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_USER')">
+					<li class="nav-item"><a class="nav-link" href="#">${mainPageLabelCart}</a></li>
+				</sec:authorize>
 				<li class="nav-item"><a class="nav-link" href="${logoutUrl}">${mainPageLabelLogout}</a></li>
 			</ul>
 		</div>
@@ -63,34 +77,44 @@
 				<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
 					<div class="list-group">
 						<c:forEach items="${categories}" var="category">
-							<a href="#" class="list-group-item">${category.name}</a>
+							<a href="<c:url value='/providers/${category.id}' />" class="list-group-item">${category.name}</a>
 						</c:forEach>
 					</div>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<!--<a href="<c:url value='#' />" class="list-group-item">${mainPageLabelAddCategory}</a>-->
+						<div class="jumbotron" id="header">
+							<div id="add">${mainPageLabelAddCategory}</div>
+							<form:form action="${addCategoryUrl}" method="POST">
+								<input id="add_category" name="name" type="text"/>
+								<input id="add_category" type="submit" value="${mainPageLabelAdd}"/>
+							</form:form>
+						</div>
+					</sec:authorize>
 				</div>
-				<!--/span-->
 			</c:if>
 
 			<div class="col-xs-12 col-sm-9">
-				<p class="pull-xs-right hidden-sm-up">
-					<button type="button" class="btn btn-primary btn-sm"
-						data-toggle="offcanvas">Toggle nav</button>
-				</p>
-				<div class="jumbotron">
-					<h1>${mainPageLabelProjectName}</h1>
+				
+				<div class="jumbotron" id="header">
+					<h1>${category.name}</h1>
 					<p>This is an example to show the potential of an offcanvas
 						layout pattern in Bootstrap. Try some responsive-range viewport
 						sizes to see it in action.</p>
 				</div>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<div class="jumbotron" id="header">
+					<h3>${mainPageLabelAddItem}</h3>
+				</div>
+				</sec:authorize>
 				
 				<c:if test="${not empty items}">
 					<div class="row">
 						<c:forEach items="${items}" var="item">
 							<div class="col-xs-6 col-lg-4">
-								<h2>${item.name}</h2>
-								<p>${item.price}</p>
+								<h5>${item.name}</h5>
+								<h3>${item.price} ₽</h3>
 								<p>
-									<a class="btn btn-secondary" href="#" role="button">View
-										details &raquo;</a>
+									<a class="btn btn-secondary" href="#" role="button">${mainPageLabelViewDetails} &raquo;</a>
 								</p>
 							</div>							
 						</c:forEach>
@@ -108,7 +132,7 @@
 		<hr>
 
 		<footer>
-			<p>&copy; Company 2014</p>
+			<p>&copy; ${mainPageLabelProjectName} 2016</p>
 		</footer>
 
 	</div>

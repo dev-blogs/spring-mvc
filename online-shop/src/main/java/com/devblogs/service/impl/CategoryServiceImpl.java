@@ -38,7 +38,15 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	@Transactional(readOnly = false)
 	public Category save(Category category) {
-		return null;
+		if (category.getId() == null) {
+            log.info("Inserting new category");
+            em.persist(category);
+        } else {
+            em.merge(category);
+            log.info("Updating existing category");
+        }
+        log.info("User saved with id: " + category.getId());
+        return category;
 	}
 
 	@Override
