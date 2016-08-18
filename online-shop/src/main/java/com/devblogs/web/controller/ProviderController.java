@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.devblogs.model.Category;
+import com.devblogs.model.Item;
 import com.devblogs.model.Provider;
+import com.devblogs.service.CategoryService;
+import com.devblogs.service.ItemService;
 import com.devblogs.service.ProviderService;
 
 @Controller
@@ -26,12 +30,25 @@ public class ProviderController {
 
 	@Autowired
 	private ProviderService providerService;
+	@Autowired
+	private CategoryService categoryService;
+	@Autowired
+	private ItemService itemService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model uiModel) {
 		logger.info("Listing providers");
 		List<Provider> contacts = providerService.findAll();
+		List<Category> categories = categoryService.findAll();
+		
+		Category category = categoryService.findById(1l);
+		
+		List<Item> items = itemService.findByCategory(category);
+		
 		uiModel.addAttribute("providers", contacts);
+		uiModel.addAttribute("categories", categories);
+		uiModel.addAttribute("items", items);
+		
 		logger.info("No. of providers: " + contacts.size());
 		return "providers/list";
 	}

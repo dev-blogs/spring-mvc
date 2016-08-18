@@ -20,8 +20,10 @@ import javax.persistence.Table;
 public class Item {
 	private Long id;
 	private String name;
+	private Double price;
 	private Set<Provider> providers = new HashSet<Provider>();
-	private Warehouse warehouse;
+	private Category category;
+	private Warehouse warehouse;	
 
 	public Item() {
 	}
@@ -45,6 +47,15 @@ public class Item {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@Column(name = "price")
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinTable(name = "items_providers", joinColumns = { @JoinColumn(name = "item_id") }, inverseJoinColumns = {
@@ -55,6 +66,16 @@ public class Item {
 
 	public void setProviders(Set<Provider> providers) {
 		this.providers = providers;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@ManyToOne
@@ -82,6 +103,6 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return "[id=" + this.id + ", name=" + this.name + "]";
+		return "[id=" + this.id + ", name=" + this.name + ", price=" + this.price + "]";
 	}
 }
