@@ -2,6 +2,7 @@ package com.devblogs.model;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "categories")
@@ -29,6 +32,7 @@ public class Category {
 		this.id = id;
 	}
 
+	@NotEmpty(message="{validation.category.NotEmpty.message}")
 	@Column(name = "name")
 	public String getName() {
 		return name;

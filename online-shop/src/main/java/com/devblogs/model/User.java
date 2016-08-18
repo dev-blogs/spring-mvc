@@ -60,6 +60,7 @@ public class User {
 		this.login = login;
 	}
 
+	@NotEmpty(message="{validation.password.NotEmpty.message}")
 	@Column(name = "password")
 	public String getPassword() {
 		return password;
@@ -69,6 +70,7 @@ public class User {
 		this.password = password;
 	}
 	
+	@NotEmpty(message="{validation.password.NotEmpty.message}")
 	@Transient
 	public String getConfirm() {
 		return confirm;
@@ -89,7 +91,7 @@ public class User {
 		this.name = name;
 	}
 
-	@NotEmpty(message="{validation.email.NotEmpty.message}")
+	//@NotEmpty(message="{validation.email.NotEmpty.message}")
 	@Pattern(regexp=".+@.+\\..+", message="{validation.login.email}")
 	@Column(name = "email")
 	public String getEmail() {

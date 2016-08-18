@@ -85,6 +85,9 @@
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 									<input type="password" class="form-control" name="password" id="password"  placeholder="${placeHolderPassword}"/>
 								</div>
+								<div>
+									<form:errors path="password" cssClass="alert-danger" />
+								</div>
 							</div>
 						</div>
 
@@ -94,6 +97,9 @@
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="${placeHolderConfirm}"/>
+								</div>
+								<div>
+									<form:errors path="confirm" cssClass="alert-danger" />
 								</div>
 							</div>
 						</div>

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,10 +38,20 @@ public class CategoryController {
 	private CategoryService categoryService;
 	@Autowired
 	private ItemService itemService;
+	@Autowired
+	private MessageSource messageSource;
 
 	@RequestMapping(value= "/add", method = RequestMethod.POST)
-	public String add(@Valid Category category, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+	public String add(@Valid Category category, BindingResult bindingResult, Model uiModel, Locale locale) {
 		logger.info("Add cateogory");
+		
+		if (bindingResult.hasErrors()) {
+			List<Category> categories = categoryService.findAll();
+			//uiModel.addAttribute("message", new Message("alert alert-danger", messageSource.getMessage("user_save_fail", new Object[] {}, locale)));
+			uiModel.addAttribute("categories", categories);
+			uiModel.addAttribute("category", category);
+			return "providers/list";
+		}
 		
 		Category saveCategory;
 		try {
@@ -51,17 +62,13 @@ public class CategoryController {
 			return "registration/registrationForm";
 		}
 		
-		//List<Provider> providers = providerService.findAll();
+		List<Item> items = itemService.findByCategory(saveCategory);
 		List<Category> categories = categoryService.findAll();
 		
-		List<Item> items = itemService.findByCategory(saveCategory);
-		
-		//uiModel.addAttribute("providers", providers);
 		uiModel.addAttribute("categories", categories);
 		uiModel.addAttribute("items", items);
 		uiModel.addAttribute("category", saveCategory);
 		
-		//logger.info("No. of providers: " + providers.size());
 		return "providers/list";
 	}
 }

@@ -3,10 +3,8 @@ package com.devblogs.web.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.devblogs.model.Role;
 import com.devblogs.model.User;
 import com.devblogs.service.RoleService;
@@ -58,6 +54,11 @@ public class RegistrationController {
 		logger.info("Registration");
 		if (!user.getPassword().equals(user.getConfirm())) {
 			uiModel.addAttribute("message", new Message("alert alert-danger", messageSource.getMessage("password_match_fail", new Object[] {}, locale)));
+			uiModel.addAttribute("user", user);
+			return "registration/registrationForm";
+		}
+		if (user.getPassword().length() == 0) {
+			uiModel.addAttribute("message", new Message("alert alert-danger", messageSource.getMessage("user_save_fail", new Object[] {}, locale)));
 			uiModel.addAttribute("user", user);
 			return "registration/registrationForm";
 		}
