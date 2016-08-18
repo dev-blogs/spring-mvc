@@ -28,8 +28,8 @@
 	<spring:url value="/static/css/view.css" var="view_css"/>
 	<link href="${view_css}"  rel="stylesheet"></link>
 	<!-- Custom styles for this template -->
-	<spring:url value="/static/css/carausel.css" var="carausel_css"/>
-	<link href="${carausel_css}"  rel="stylesheet"></link>
+	<!--<spring:url value="/static/css/carausel.css" var="carausel_css"/>
+	<link href="${carausel_css}"  rel="stylesheet"></link>-->
 	
 	<c:url value="/category/add" var="addCategoryUrl"/>
 	

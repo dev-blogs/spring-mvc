@@ -88,7 +88,7 @@
 							<div id="add">${mainPageLabelAddCategory}</div>
 							<form:form action="${addCategoryUrl}" method="POST">
 								<input id="add_category" name="name" type="text"/>
-								<input id="add_category" type="submit" value="${mainPageLabelAdd}"/>
+								<input id="add_category" class="btn btn-block btn-primary btn-default" type="submit" value="${mainPageLabelAdd}"/>
 							</form:form>
 						</div>
 					</sec:authorize>
