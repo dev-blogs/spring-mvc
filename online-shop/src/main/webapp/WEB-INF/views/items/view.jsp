@@ -25,9 +25,13 @@
 	<spring:url value="/static/css/offcanvas.css" var="offcanvas_css"/>
 	<link href="${offcanvas_css}"  rel="stylesheet"></link>
 	
-	<c:url value="/category/add" var="addCategoryUrl"/>
+	<spring:url value="/static/css/view.css" var="view_css"/>
+	<link href="${view_css}"  rel="stylesheet"></link>
+	<!-- Custom styles for this template -->
+	<spring:url value="/static/css/carausel.css" var="carausel_css"/>
+	<link href="${carausel_css}"  rel="stylesheet"></link>
 	
-	<spring:url value="/items/view" var="viewDatailsUrl"/>
+	<c:url value="/category/add" var="addCategoryUrl"/>
 	
 	<spring:message code="label_ru_RU" var="labelRuRu"/>
 	<spring:message code="label_en_US" var="labelEnUs"/>
@@ -74,64 +78,17 @@
 	<div class="container">
 
 		<div class="row row-offcanvas row-offcanvas-right">
-
-			<c:if test="${not empty categories}">
-				<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-					<div class="list-group">
-						<c:forEach items="${categories}" var="category">
-							<a href="<c:url value='/providers/${category.id}' />" class="list-group-item">${category.name}</a>
-						</c:forEach>
-					</div>
-					<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<!--<a href="<c:url value='#' />" class="list-group-item">${mainPageLabelAddCategory}</a>-->
-						<div class="jumbotron" id="header">
-							<div id="add">${mainPageLabelAddCategory}</div>
-							<form:form action="${addCategoryUrl}" method="POST">
-								<input id="add_category" name="name" type="text"/>
-								<input id="add_category" type="submit" value="${mainPageLabelAdd}"/>
-							</form:form>
-						</div>
-					</sec:authorize>
-				</div>
-			</c:if>
-
-			<div class="col-xs-12 col-sm-9">
-				
-				<div class="jumbotron" id="header">
-					<h1>${category.name}</h1>
-					<p>This is an example to show the potential of an offcanvas
-						layout pattern in Bootstrap. Try some responsive-range viewport
-						sizes to see it in action.</p>
-				</div>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<div class="jumbotron" id="header">
-					<h3>${mainPageLabelAddItem}</h3>
-				</div>
-				</sec:authorize>
-				
-				<c:if test="${not empty items}">
-					<div class="row">
-						<c:forEach items="${items}" var="item">
-							<div class="col-xs-6 col-lg-4">
-								<h5>${item.name}</h5>
-								<h3>${item.price} ₽</h3>
-								<p>
-									<a class="btn btn-secondary" href="${viewDatailsUrl}/${item.id}" role="button">${mainPageLabelViewDetails} &raquo;</a>
-								</p>
-							</div>							
-						</c:forEach>
-						<!--/span-->
-					</div>
-				</c:if>
-				<!--/row-->
-			</div>
-			<!--/span-->
-
-
-		</div>
-		<!--/row-->
-
-		<hr>
+		
+		<div class="row featurette">
+	        <div class="col-md-7">
+	          <h2 class="featurette-heading">Table woodoo</h2>
+	          <h3><span class="text-muted">Price 200.0 ₽</span></h3>
+	          <p class="lead">Table woodoo.</p>
+	        </div>
+	        <div class="col-md-5">
+	          <img class="featurette-image img-responsive center-block" style="width:500px;height:500px;" src="http://pngimg.com/upload/table_PNG7005.png" alt="Generic placeholder image">
+	        </div>
+      	</div>
 
 		<footer>
 			<p>&copy; ${mainPageLabelProjectName} 2016</p>
