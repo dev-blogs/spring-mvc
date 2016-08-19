@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +38,7 @@ public class User {
 	private Date registrationDate;
 	private String description;
 	private Set<Role> roles = new HashSet<Role>();
+	private Set<Order> orders = new HashSet<Order>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -135,6 +137,15 @@ public class User {
 		this.roles = roles;
 	}
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
+
 	@Override
 	public String toString() {
 		return "user[id=" + this.id + ", login=" + this.login + ", name=" + this.name + ", email=" + this.email + ", registrationDate=" + this.registrationDate + ", description=" + this.description + "]";

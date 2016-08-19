@@ -6,117 +6,138 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<meta name="description" content="">
-	<meta name="author" content="">
-	
-	<c:url value="/j_spring_security_logout" var="logoutUrl" />
-	
-	<link rel="icon" href="../../favicon.ico">
-	
-	<!-- Bootstrap core CSS -->
-	<spring:url value="/static/css/bootstrap.min.css" var="bootstrap_min_css"/>
-	<link href="${bootstrap_min_css}"  rel="stylesheet"></link>
-	<!-- Custom styles for this template -->
-	<spring:url value="/static/css/offcanvas.css" var="offcanvas_css"/>
-	<link href="${offcanvas_css}"  rel="stylesheet"></link>
-	
-	<spring:url value="/static/css/view.css" var="view_css"/>
-	<link href="${view_css}"  rel="stylesheet"></link>
-	<!-- Custom styles for this template -->
-	<!--<spring:url value="/static/css/carausel.css" var="carausel_css"/>
-	<link href="${carausel_css}"  rel="stylesheet"></link>-->
-	
-	<c:url value="/category/add" var="addCategoryUrl"/>
-	
-	<spring:message code="label_ru_RU" var="labelRuRu"/>
-	<spring:message code="label_en_US" var="labelEnUs"/>
-	
-	<spring:message code="main_page_label_projectName" var="mainPageLabelProjectName"/>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Carousel Template for Bootstrap</title>
+    
+    <!-- Bootstrap core CSS -->
+	<spring:url value="/static/css/view/bs.min.css" var="bootstrap_min_css"/>
+	<spring:url value="/static/css/view/carousel.css" var="carousel_css"/>
+	<spring:url value="/static/css/view/ie10-viewport-bug-workaround.css" var="ie10-viewport-bug-workaround-css"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="${bootstrap_min_css}" rel="stylesheet">
+    <link href="${carousel_css}" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="${ie10-viewport-bug-workaround-css}" rel="stylesheet">
+
+    <spring:message code="main_page_label_projectName" var="mainPageLabelProjectName"/>
 	<spring:message code="main_page_label_home" var="mainPageLabelHome"/>
 	<spring:message code="main_page_label_add_item" var="mainPageLabelAddItem"/>
 	<spring:message code="main_page_label_orders" var="mainPageLabelOrders"/>
 	<spring:message code="main_page_label_users" var="mainPageLabelUsers"/>
-	<spring:message code="main_page_label_logout" var="mainPageLabelLogout"/>
-	<spring:message code="main_page_label_view_details" var="mainPageLabelViewDetails"/>
 	<spring:message code="main_page_label_cart" var="mainPageLabelCart"/>
-	<spring:message code="main_page_label_add_category" var="mainPageLabelAddCategory"/>
-	<spring:message code="main_page_label_add" var="mainPageLabelAdd"/>
+	<spring:message code="main_page_label_logout" var="mainPageLabelLogout"/>
+	<spring:message code="main_page_label_logout" var="mainPageLabelLogout"/>
+	<spring:message code="view_page_buy_button" var="viewPageBuyButton"/>
+	<spring:message code="view_page_edit_button" var="viewPageEditButton"/>
+	<spring:message code="view_page_lebel_price" var="viewPageLebelPrice"/>
 	
-	<title>${mainPageLabelProjectName}</title>
-</head>
-
-<body>
-	<div id="lang">
-   		<a href="${homeUrl}?lang=ru_RU">${labelRuRu}</a> | 
-   		<a href="${homeUrl}?lang=en_US">${labelEnUs}</a>
+	<spring:url value="/providers" var="homeUrl"/>
+	<spring:url value="/items/view" var="viewDatailsUrl"/>
+	<spring:url value="/items/add" var="addOrderUrl"/>
+	<spring:url value="/j_spring_security_logout" var="logoutUrl" />
+	<spring:url value="/items/view" var="currentViewUrl" />
+	
+	<spring:message code="label_ru_RU" var="labelRuRu"/>
+	<spring:message code="label_en_US" var="labelEnUs"/>
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+  	<div id="lang">
+   		<a href="${currentViewUrl}/${item.id}?lang=ru_RU">${labelRuRu}</a> | 
+   		<a href="${currentViewUrl}/${item.id}?lang=en_US">${labelEnUs}</a>
    	</div>
+    <div class="navbar-wrapper">
+      <div class="container">
 
-	<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
-		<div class="container">
-			<a class="navbar-brand" href="<c:url value='http://dev-blogs.com'/>">${mainPageLabelProjectName}</a>
-			<ul class="nav navbar-nav">
-				<li class="nav-item active"><a class="nav-link" href="<c:url value='/providers'/>">${mainPageLabelHome}</a></li>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<li class="nav-item"><a class="nav-link" href="#">${mainPageLabelOrders}</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">${mainPageLabelUsers}</a></li>
-				</sec:authorize>
-				<sec:authorize access="hasRole('ROLE_USER')">
-					<li class="nav-item"><a class="nav-link" href="#">${mainPageLabelCart}</a></li>
-				</sec:authorize>
-				<li class="nav-item"><a class="nav-link" href="${logoutUrl}">${mainPageLabelLogout}</a></li>
-			</ul>
-		</div>
-		<!-- /.container -->
-	</nav>
-	<!-- /.navbar -->
+        <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="http://${mainPageLabelProjectName}">${mainPageLabelProjectName}</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="${homeUrl}">${mainPageLabelHome}</a></li>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+	                <li><a href="#">${mainPageLabelOrders}</a></li>
+	                <li><a href="#">${mainPageLabelUsers}</a></li>
+	            </sec:authorize>
+	            <sec:authorize access="hasRole('ROLE_USER')">
+            	<li>
+	            	<a href="#">${mainPageLabelCart}</a>
+	            	<c:if test="${not empty message}">
+            			<div id="message" class="${message.type}">${message.message}</div>
+        			</c:if>
+        			<!-- http://bootsnipp.com/snippets/featured/responsive-shopping-cart -->
+       			</li>
+	            </sec:authorize>
+	            <li><a href="${logoutUrl}">${mainPageLabelLogout}</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
 
-	<div class="container">
+      </div>
+    </div>
 
-		<div class="row row-offcanvas row-offcanvas-right">
-		
-		<div class="row featurette">
-	        <div class="col-md-7">
-	          <h2 class="featurette-heading">Table woodoo</h2>
-	          <h3><span class="text-muted">Price 200.0 ₽</span></h3>
-	          <p class="lead">Table woodoo.</p>
-	        </div>
-	        <div class="col-md-5">
-	          <img class="featurette-image img-responsive center-block" style="width:500px;height:500px;" src="http://pngimg.com/upload/table_PNG7005.png" alt="Generic placeholder image">
-	        </div>
-      	</div>
-
-		<footer>
-			<p>&copy; ${mainPageLabelProjectName} 2016</p>
-		</footer>
-
-	</div>
-	<!--/.container-->
-
-
-	<!-- Bootstrap core JavaScript
+    <!-- Marketing messaging and featurettes
     ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
-		integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY"
-		crossorigin="anonymous"></script>
-	<script>
-		window.jQuery
-				|| document
-						.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
-	</script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"
-		integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB"
-		crossorigin="anonymous"></script>
-	<script src="../../dist/js/bootstrap.min.js"></script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-	<script src="offcanvas.js"></script>
-</body>
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+
+      <!-- START THE FEATURETTES -->
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h3 class="featurette-heading">${item.name}</h3>
+          <h2><span class="text-muted">${viewPageLebelPrice} ${item.price} ₽</span></h2>
+          <p class="lead">${item.description}</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive center-block" width="400px" height="400px" src="http://pngimg.com/upload/table_PNG7005.png" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-bottom-divider">
+      <sec:authorize access="hasRole('ROLE_ADMIN')">
+	      <form method="POST" action="#">
+	      	<input type="submit" name="Buy" class="btn btn-send btn-primary btn-default" value="${viewPageEditButton}"/>
+	      </form>
+	  </sec:authorize>
+	  <sec:authorize access="hasRole('ROLE_USER')">
+	  	<form method="POST" action="${addOrderUrl}">
+	  		<!--<input type="hidden" name="userId" value="<sec:authentication property="name"/>"/>-->
+	  		<input type="hidden" name="itemId" value="${item.id}"/>
+	      	<input type="submit" name="Buy" class="btn btn-send btn-primary btn-default" value="${viewPageBuyButton}"/>
+	      </form>
+	  </sec:authorize>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
 </html>

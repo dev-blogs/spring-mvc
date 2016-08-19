@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devblogs.model.Item;
 import com.devblogs.model.Role;
 import com.devblogs.model.User;
 import com.devblogs.service.UserService;
@@ -42,6 +43,14 @@ public class UserServiceImpl implements UserService {
 		TypedQuery<User> typedQuery = em.createQuery("from User u where u.id = :id", User.class);
         typedQuery.setParameter("id", id);
         return typedQuery.getSingleResult();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public User findByLogin(String login) {
+		TypedQuery<User> query = em.createQuery("from User u where u.login = :login", User.class);
+		query.setParameter("login", login);
+		return query.getSingleResult();
 	}
 
 	@Override

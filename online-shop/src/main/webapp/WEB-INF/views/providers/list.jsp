@@ -14,8 +14,6 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	
-	<c:url value="/j_spring_security_logout" var="logoutUrl" />
-	
 	<link rel="icon" href="../../favicon.ico">
 	
 	<!-- Bootstrap core CSS -->
@@ -29,7 +27,7 @@
 	
 	<spring:url value="/items/view" var="viewDatailsUrl"/>
 	<spring:url value="/providers" var="homeUrl"/>
-	
+	<c:url value="/j_spring_security_logout" var="logoutUrl" />
 	<spring:message code="label_ru_RU" var="labelRuRu"/>
 	<spring:message code="label_en_US" var="labelEnUs"/>
 	

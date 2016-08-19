@@ -123,6 +123,7 @@ body {
   }
 
   .featurette-heading {
+  	font-family: serif;
     font-size: 50px;
   }
 }

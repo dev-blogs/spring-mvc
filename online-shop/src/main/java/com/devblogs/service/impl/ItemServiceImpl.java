@@ -41,9 +41,14 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	@Transactional(readOnly = true)
 	public Item findById(Long id) {
+		if (id > 0) {
+			TypedQuery<Item> query = em.createQuery("from Item i where i.id = :id", Item.class);
+			query.setParameter("id", id);
+			return query.getSingleResult();
+		}
 		return null;
 	}
-
+	
 	@Override
 	@Transactional(readOnly = false)
 	public Item save(Item item) {

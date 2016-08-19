@@ -2,6 +2,7 @@ package com.devblogs.model;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,9 +23,11 @@ public class Item {
 	private Long id;
 	private String name;
 	private Double price;
+	private String description;
 	private Set<Provider> providers = new HashSet<Provider>();
+	private Order order;
 	private Category category;
-	private Warehouse warehouse;	
+	private Warehouse warehouse;
 
 	public Item() {
 	}
@@ -56,6 +60,15 @@ public class Item {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinTable(name = "items_providers", joinColumns = { @JoinColumn(name = "item_id") }, inverseJoinColumns = {
@@ -68,6 +81,16 @@ public class Item {
 		this.providers = providers;
 	}
 	
+	@OneToOne
+	@JoinColumn(name = "order_id")
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	public Category getCategory() {
@@ -87,7 +110,7 @@ public class Item {
 	public void setWarehouse(Warehouse warehouse) {
 		this.warehouse = warehouse;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
