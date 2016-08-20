@@ -16,7 +16,7 @@ public class Order {
 	private Long id;
 	private User user;
 	private Item item;
-	private Boolean isPurchased;
+	private Boolean chosen;
 	private Boolean isDone;
 
 	public Order() {
@@ -53,13 +53,13 @@ public class Order {
 		this.item = item;
 	}
 
-	@Column(name = "is_purchased")
-	public Boolean getIsPurchased() {
-		return isPurchased;
+	@Column(name = "chosen")
+	public Boolean getChosen() {
+		return chosen;
 	}
 
-	public void setIsPurchased(Boolean isPurchased) {
-		this.isPurchased = isPurchased;
+	public void setChosen(Boolean Chosen) {
+		this.chosen = Chosen;
 	}
 
 	@Column(name = "is_done")

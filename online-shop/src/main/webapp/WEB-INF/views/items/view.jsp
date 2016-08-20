@@ -27,6 +27,9 @@
     <link href="${carousel_css}" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="${ie10-viewport-bug-workaround-css}" rel="stylesheet">
+    
+    <spring:url value="/resources/js/jquery-1.7.1.js" var="jquery_url" />
+    <script src="${jquery_url}" type="text/javascript"><jsp:text/></script>
 
     <spring:message code="main_page_label_projectName" var="mainPageLabelProjectName"/>
 	<spring:message code="main_page_label_home" var="mainPageLabelHome"/>
@@ -43,11 +46,19 @@
 	<spring:url value="/providers" var="homeUrl"/>
 	<spring:url value="/items/view" var="viewDatailsUrl"/>
 	<spring:url value="/items/add" var="addOrderUrl"/>
+	<spring:url value="/items/cart" var="cartUrl"/>
 	<spring:url value="/j_spring_security_logout" var="logoutUrl" />
 	<spring:url value="/items/view" var="currentViewUrl" />
 	
 	<spring:message code="label_ru_RU" var="labelRuRu"/>
 	<spring:message code="label_en_US" var="labelEnUs"/>
+	
+	<script type="text/javascript">
+		$("#buy").click(function() {
+  			alert( "Handler for .click() called." );
+		});
+	</script>
+	
   </head>
 <!-- NAVBAR
 ================================================== -->
@@ -79,7 +90,7 @@
 	            </sec:authorize>
 	            <sec:authorize access="hasRole('ROLE_USER')">
             	<li>
-	            	<a href="#">${mainPageLabelCart}</a>
+	            	<a href="${cartUrl}">${mainPageLabelCart}</a>
 	            	<c:if test="${not empty message}">
             			<div id="message" class="${message.type}">${message.message}</div>
         			</c:if>
@@ -122,11 +133,14 @@
 	      </form>
 	  </sec:authorize>
 	  <sec:authorize access="hasRole('ROLE_USER')">
-	  	<form method="POST" action="${addOrderUrl}">
+	  	<form method="POST" action="${addOrderUrl}/${item.id}">
 	  		<!--<input type="hidden" name="userId" value="<sec:authentication property="name"/>"/>-->
-	  		<input type="hidden" name="itemId" value="${item.id}"/>
+	  		<!--<input type="hidden" name="itemId" value="${item.id}"/>-->
 	      	<input type="submit" name="Buy" class="btn btn-send btn-primary btn-default" value="${viewPageBuyButton}"/>
 	      </form>
+	      <!--<button name="buy" id="buy" class="btn btn-send btn-primary btn-default">
+	      	${viewPageBuyButton}
+	      </buton>-->
 	  </sec:authorize>
 
     <!-- Bootstrap core JavaScript

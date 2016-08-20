@@ -1,5 +1,6 @@
 package com.devblogs.web.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,20 +46,20 @@ public class ItemController {
 		return "items/view";
 	}
 	
-	@RequestMapping(value= "/add", method = RequestMethod.POST)
-	public String addToCart(HttpServletRequest request, Model uiModel, Locale locale) {
+	@RequestMapping(value= "/add/{id}", method = RequestMethod.POST)
+	public String addToCart(@PathVariable("id") Long id, Model uiModel, HttpServletRequest request, Locale locale) {
 		logger.info("Add order");
 		
-		String itemId = request.getParameter("itemId");
+		//String itemId = request.getParameter("itemId");
 	    String login = request.getRemoteUser();
 		
 	    User user = userService.findByLogin(login);
-	    Item item = itemService.findById(Long.parseLong(itemId));
+	    Item item = itemService.findById(id);
 	    
 	    Order order = new Order();
 	    order.setUser(user);
 	    order.setItem(item);
-	    order.setIsPurchased(false);
+	    order.setChosen(true);
 	    order.setIsDone(false);
 	    
 	    orderService.save(order);
@@ -69,5 +70,32 @@ public class ItemController {
 		uiModel.addAttribute("message", new Message("lblCartCount", (++count) + ""));
 		
 		return "items/view";
+	}
+	
+	@RequestMapping(value= "/remove/{id}", method = RequestMethod.GET)
+	public String removeItemFromCart(@PathVariable("id") Long id, HttpServletRequest request, Model uiModel, Locale locale) {
+		String login = request.getRemoteUser();
+	    User user = userService.findByLogin(login);
+
+	    Order order = orderService.findById(id);
+	    orderService.delete(order);
+	    
+	    List<Order> orders = orderService.findChosenOrdersByUser(user);
+	    
+	    uiModel.asMap().clear();
+	    uiModel.addAttribute("orders", orders);
+		return "items/cart";
+	}
+	
+	@RequestMapping(value= "/cart", method = RequestMethod.GET)
+	public String viewCart(HttpServletRequest request, Model uiModel, Locale locale) {
+		String login = request.getRemoteUser();
+	    User user = userService.findByLogin(login);
+	    
+	    List<Order> orders = orderService.findChosenOrdersByUser(user);
+	    
+	    uiModel.addAttribute("orders", orders);
+	    
+		return "items/cart";
 	}
 }

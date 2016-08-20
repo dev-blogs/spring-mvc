@@ -14,8 +14,6 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	
-	<link rel="icon" href="../../favicon.ico">
-	
 	<!-- Bootstrap core CSS -->
 	<spring:url value="/static/css/bootstrap.min.css" var="bootstrap_min_css"/>
 	<link href="${bootstrap_min_css}"  rel="stylesheet"></link>
@@ -27,7 +25,9 @@
 	
 	<spring:url value="/items/view" var="viewDatailsUrl"/>
 	<spring:url value="/providers" var="homeUrl"/>
+	<spring:url value="/items/cart" var="cartUrl"/>
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
+	
 	<spring:message code="label_ru_RU" var="labelRuRu"/>
 	<spring:message code="label_en_US" var="labelEnUs"/>
 	
@@ -63,7 +63,7 @@
 					<li class="nav-item"><a class="nav-link" href="#">${mainPageLabelUsers}</a></li>
 				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_USER')">
-					<li class="nav-item"><a class="nav-link" href="#">${mainPageLabelCart}</a></li>
+					<li class="nav-item"><a class="nav-link" href="${cartUrl}">${mainPageLabelCart}</a></li>
 				</sec:authorize>
 				<li class="nav-item"><a class="nav-link" href="${logoutUrl}">${mainPageLabelLogout}</a></li>
 			</ul>
