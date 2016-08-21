@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.devblogs.model.Category;
 import com.devblogs.model.Item;
 import com.devblogs.model.Order;
 import com.devblogs.model.User;
+import com.devblogs.service.CategoryService;
 import com.devblogs.service.ItemService;
 import com.devblogs.service.OrderService;
 import com.devblogs.service.UserService;
@@ -35,13 +37,16 @@ public class ItemController {
 	private UserService userService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private CategoryService categoryService;
 	
-	@RequestMapping(value= "/view/{id}", method = RequestMethod.GET)
-	public String view(@PathVariable("id") Long id, Model uiModel, Locale locale) {
-		logger.info("Add cateogory");
+	@RequestMapping(value= "/view/{id}/{categoryId}", method = RequestMethod.GET)
+	public String view(@PathVariable("id") Long id, @PathVariable("categoryId") Long categoryId, Model uiModel, Locale locale) {
+		logger.info("View item");
 		
 		Item item = itemService.findById(id);
 		uiModel.addAttribute("item", item);
+		uiModel.addAttribute("categoryId", categoryId);
 		
 		return "items/view";
 	}
@@ -72,7 +77,7 @@ public class ItemController {
 		return "items/view";
 	}
 	
-	@RequestMapping(value= "/remove/{id}", method = RequestMethod.GET)
+	@RequestMapping(value= "/removeFromCart/{id}", method = RequestMethod.GET)
 	public String removeItemFromCart(@PathVariable("id") Long id, HttpServletRequest request, Model uiModel, Locale locale) {
 		String login = request.getRemoteUser();
 	    User user = userService.findByLogin(login);
@@ -85,6 +90,21 @@ public class ItemController {
 	    uiModel.asMap().clear();
 	    uiModel.addAttribute("orders", orders);
 		return "items/cart";
+	}
+	
+	@RequestMapping(value= "/remove/{id}", method = RequestMethod.POST)
+	public String removeItem(@PathVariable("id") Long id, HttpServletRequest request, Model uiModel, Locale locale) {
+	    Item item = itemService.findById(id);
+	    itemService.delete(item);
+	    String categoryId = request.getParameter("categoryId");
+	    
+	    Category category = categoryService.findById(Long.parseLong(categoryId));
+	    
+	    List<Item> items = itemService.findByCategory(category);
+	    
+	    uiModel.asMap().clear();
+	    uiModel.addAttribute("items", items);
+		return "providers/list";
 	}
 	
 	@RequestMapping(value= "/cart", method = RequestMethod.GET)

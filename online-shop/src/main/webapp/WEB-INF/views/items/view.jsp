@@ -42,6 +42,7 @@
 	<spring:message code="view_page_buy_button" var="viewPageBuyButton"/>
 	<spring:message code="view_page_edit_button" var="viewPageEditButton"/>
 	<spring:message code="view_page_lebel_price" var="viewPageLebelPrice"/>
+	<spring:message code="cart_page_btn_remove" var="cartPageBtnRemove"/>
 	
 	<spring:url value="/providers" var="homeUrl"/>
 	<spring:url value="/items/view" var="viewDatailsUrl"/>
@@ -49,6 +50,7 @@
 	<spring:url value="/items/cart" var="cartUrl"/>
 	<spring:url value="/j_spring_security_logout" var="logoutUrl" />
 	<spring:url value="/items/view" var="currentViewUrl" />
+	<spring:url value="/items/remove" var="removeItemUrl" />
 	
 	<spring:message code="label_ru_RU" var="labelRuRu"/>
 	<spring:message code="label_en_US" var="labelEnUs"/>
@@ -131,6 +133,14 @@
 	      <form method="POST" action="#">
 	      	<input type="submit" name="Buy" class="btn btn-send btn-primary btn-default" value="${viewPageEditButton}"/>
 	      </form>
+	      	<div class="col-sm-1 col-md-1">
+				<form action="${removeItemUrl}/${item.id}" method="POST">
+					<input type="hidden" id="categoryId" name="categoryId" value="${categoryId}"/>
+					<input type="submit" class="btn btn-danger" value="${cartPageBtnRemove}">
+	       				<span class="glyphicon glyphicon-remove"></span>
+	       			</input>
+				</form>
+   			</div>
 	  </sec:authorize>
 	  <sec:authorize access="hasRole('ROLE_USER')">
 	  	<form method="POST" action="${addOrderUrl}/${item.id}">

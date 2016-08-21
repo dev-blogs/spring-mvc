@@ -21,12 +21,6 @@
 	<!-- Custom styles for cart template -->
 	<spring:url value="/static/css/cart/cart.css" var="cart_css"/>
 	
-	<!-- Image -->
-	<spring:url value="/static/image/mir.png" var="mir_image"/>
-	<c:url value="/static/image/logoprosto.png" var="logo_prosto_image"/>
-	<c:url value="/static/image/yandex.png" var="yandex_image"/>
-	<c:url value="/static/image/qiwi.png" var="qiwi_image"/>
-	
 	<link href="${bootstrap_min_css}"  rel="stylesheet"></link>
 	<link href="${offcanvas_css}"  rel="stylesheet"></link>
 	<link href="${cart_css}"  rel="stylesheet"></link>
@@ -37,7 +31,7 @@
 	<spring:url value="/providers" var="homeUrl"/>
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
 	<spring:url value="/items/cart" var="cartUrl"/>
-	<spring:url value="/items/remove" var="removeUrl"/>
+	<spring:url value="/items/removeFromCart" var="removeUrl"/>
 	
 	<spring:message code="label_ru_RU" var="labelRuRu"/>
 	<spring:message code="label_en_US" var="labelEnUs"/>
@@ -155,15 +149,6 @@
 								<td colspan="2" class="hidden-xs"></td>
 								<td class="hidden-xs text-center"><strong>${cartPageLabelTotal} 1.99 ₽</strong></td>
 								<td><a href="#" class="btn btn-success btn-block">${cartPageBtnCheckout}<i class="fa fa-angle-right"></i></a></td>
-							</tr>
-							<tr>
-								
-								<td colspan="4">
-									<img src="${mir_image}" width="100px" height="100px"/>
-									<img src="${logo_prosto_image}" width="140px" height="30px"/>
-									<img src="${yandex_image}" width="150px" height="100px"/>
-									<img src="${qiwi_image}" width="120px" height="50px"/>
-								</td>
 							</tr>
 						</tfoot>
 					</table>

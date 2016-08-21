@@ -120,7 +120,7 @@
 								<h5>${item.name}</h5>
 								<h3>${item.price} ₽</h3>
 								<p>
-									<a class="btn btn-secondary" href="${viewDatailsUrl}/${item.id}" role="button">${mainPageLabelViewDetails} &raquo;</a>
+									<a class="btn btn-secondary" href="${viewDatailsUrl}/${item.id}/${category.id}" role="button">${mainPageLabelViewDetails} &raquo;</a>
 								</p>
 							</div>							
 						</c:forEach>

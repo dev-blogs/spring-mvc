@@ -1,6 +1,7 @@
 package com.devblogs.service.impl;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devblogs.model.Category;
 import com.devblogs.model.Item;
+import com.devblogs.model.Order;
 import com.devblogs.model.Provider;
 import com.devblogs.model.Role;
 import com.devblogs.service.ItemService;
@@ -58,5 +60,7 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	@Transactional(readOnly = false)
 	public void delete(Item item) {
+		Item mergedItem = em.merge(item);
+		em.remove(mergedItem);
 	}
 }
