@@ -13,7 +13,6 @@
 	<spring:url var="homeUrl" value="registration/success"/>
 	<spring:url var="loginUrl" value="/"/>
 	
-	<spring:theme code="styleSheet" var="app_css"/>
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/app.css">
 	<!-- Website Font style -->

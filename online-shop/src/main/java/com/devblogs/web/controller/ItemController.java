@@ -94,16 +94,21 @@ public class ItemController {
 	
 	@RequestMapping(value= "/remove/{id}", method = RequestMethod.POST)
 	public String removeItem(@PathVariable("id") Long id, HttpServletRequest request, Model uiModel, Locale locale) {
+		String categoryId = request.getParameter("categoryId");
+		Category category = categoryService.findById(Long.parseLong(categoryId));
+		List<Category> categories = categoryService.findAll();
+		
 	    Item item = itemService.findById(id);
+	    
 	    itemService.delete(item);
-	    String categoryId = request.getParameter("categoryId");
 	    
-	    Category category = categoryService.findById(Long.parseLong(categoryId));
-	    
-	    List<Item> items = itemService.findByCategory(category);
+	    List<Item> items = itemService.findByCategory(category);	    
 	    
 	    uiModel.asMap().clear();
 	    uiModel.addAttribute("items", items);
+	    uiModel.addAttribute("categories", categories);
+	    uiModel.addAttribute("category", category);
+	    
 		return "providers/list";
 	}
 	

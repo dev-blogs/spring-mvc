@@ -37,7 +37,7 @@ CREATE TABLE CATEGORIES (
 	NAME VARCHAR(255) NOT NULL,
 	PRIMARY KEY (ID)
 );
- 
+
 CREATE TABLE items (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
@@ -47,12 +47,12 @@ CREATE TABLE items (
     warehouse_id INT UNSIGNED NOT NULL,
     order_id INT UNSIGNED,
     PRIMARY KEY (id),
-    FOREIGN KEY (category_id) REFERENCES categories (id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (warehouse_id) REFERENCES warehouses (id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+    FOREIGN KEY (category_id) REFERENCES CATEGORIES (ID)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	FOREIGN KEY (warehouse_id) REFERENCES warehouses (id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
  
 CREATE TABLE providers (
@@ -65,11 +65,6 @@ CREATE TABLE items_providers (
     item_id INT UNSIGNED NOT NULL,
     provider_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (item_id) REFERENCES items (id)
-    	ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (provider_id) REFERENCES providers (id)
-    	ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE orders (

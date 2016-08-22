@@ -70,9 +70,10 @@ public class Item {
 		this.description = description;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	@JoinTable(name = "items_providers", joinColumns = { @JoinColumn(name = "item_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "provider_id") })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH})
+    @JoinTable(name = "items_providers",
+	    joinColumns={@JoinColumn(name = "item_id")},
+	    inverseJoinColumns={@JoinColumn(name = "provider_id")})
 	public Set<Provider> getProviders() {
 		return providers;
 	}

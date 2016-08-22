@@ -10,7 +10,7 @@
 
 		<!-- Website CSS style -->
 		<link href="<c:url value='/static/css/bootstrap.css' />"  rel="stylesheet"></link>
-		<spring:theme code="styleSheet" var="app_css"/>
+		<!-- <spring:theme code="styleSheet" var="app_css"/> -->
 		<spring:url value="/static/css/registration.css" var="standard_css_url"/>
 		<link rel="stylesheet" type="text/css" media="screen" href="${standard_css_url}" />
 		
