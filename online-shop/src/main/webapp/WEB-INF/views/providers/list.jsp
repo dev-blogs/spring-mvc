@@ -57,7 +57,7 @@
 		<div class="container">
 			<a class="navbar-brand" href="<c:url value='http://dev-blogs.com'/>">${mainPageLabelProjectName}</a>
 			<ul class="nav navbar-nav">
-				<li class="nav-item active"><a class="nav-link" href="<c:url value='/providers'/>">${mainPageLabelHome}</a></li>
+				<li class="nav-item"><a class="nav-link" href="<c:url value='/providers'/>">${mainPageLabelHome}</a></li>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<li class="nav-item"><a class="nav-link" href="#">${mainPageLabelOrders}</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">${mainPageLabelUsers}</a></li>
