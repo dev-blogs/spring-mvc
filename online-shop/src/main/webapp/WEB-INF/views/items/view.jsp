@@ -51,6 +51,7 @@
 	<spring:url value="/j_spring_security_logout" var="logoutUrl" />
 	<spring:url value="/items/view" var="currentViewUrl" />
 	<spring:url value="/items/remove" var="removeItemUrl" />
+	<spring:url value="/items/edit" var="editItemUrl" />
 	
 	<spring:message code="label_ru_RU" var="labelRuRu"/>
 	<spring:message code="label_en_US" var="labelEnUs"/>
@@ -130,7 +131,7 @@
 
       <hr class="featurette-bottom-divider">
       <sec:authorize access="hasRole('ROLE_ADMIN')">
-	      <form method="POST" action="#">
+	      <form method="GET" action="${editItemUrl}/${item.id}">
 	      	<input type="submit" name="Buy" class="btn btn-send btn-primary btn-default" value="${viewPageEditButton}"/>
 	      </form>
 	      	<div class="col-sm-1 col-md-1">

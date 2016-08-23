@@ -40,6 +40,16 @@ public class ItemController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	@RequestMapping(value= "/edit/{id}", method = RequestMethod.GET)
+	public String edit(@PathVariable("id") Long id, Model uiModel, Locale locale) {
+		logger.info("View item");
+		
+		Item item = itemService.findById(id);
+		uiModel.addAttribute("item", item);
+		
+		return "items/edit";
+	}
+	
 	@RequestMapping(value= "/view/{id}/{categoryId}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, @PathVariable("categoryId") Long categoryId, Model uiModel, Locale locale) {
 		logger.info("View item");
