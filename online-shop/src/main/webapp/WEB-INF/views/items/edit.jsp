@@ -109,15 +109,12 @@
 	<div class="container">
 		<div class="row_edit">
 			<div class="col-md-12">
-				<small><i></i>Add alerts if form ok... success, else error.</i></small>
-				<div class="alert alert-success">
-					<strong><span class="glyphicon glyphicon-send"></span>
-						Success! Message sent. (If form ok!)</strong>
-				</div>
-				<div class="alert alert-danger">
-					<span class="glyphicon glyphicon-alert"></span><strong>
-						Error! Please check the inputs. (If form error!)</strong>
-				</div>
+				<c:if test="${not empty message}">
+					<div class="${message.type}">
+						<strong><span class="glyphicon glyphicon-send"></span>
+							${message.message}</strong>
+					</div>
+				</c:if>
 			</div>
 			<form role="form" action="${saveUrl}/${item.id}" method="post" modelAttribute="item">
 				<input type="hidden" id="categoryId" name="categoryId" value="${categoryId}"/>
@@ -144,7 +141,7 @@
 					<div class="form-group">
 						<label for="InputDescription">${editPageLabelDescription}</label>
 						<div class="input-group">
-							<textarea name="description" id="description" class="form-control" rows="5" value="${item.description}" required></textarea>
+							<textarea name="description" id="description" class="form-control" rows="5" required>${item.description}</textarea>
 							<span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
 						</div>
 					</div>

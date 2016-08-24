@@ -20,6 +20,7 @@ import com.devblogs.model.Item;
 import com.devblogs.model.Order;
 import com.devblogs.model.Provider;
 import com.devblogs.model.User;
+import com.devblogs.model.Warehouse;
 import com.devblogs.service.CategoryService;
 import com.devblogs.service.ItemService;
 import com.devblogs.service.OrderService;
@@ -43,6 +44,8 @@ public class ItemController {
 	private CategoryService categoryService;
 	@Autowired
 	private ProviderService providerService;
+	@Autowired
+	private MessageSource messageSource;
 	
 	@RequestMapping(value= "/edit/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") Long id, Model uiModel, HttpServletRequest request, Locale locale) {
@@ -75,13 +78,20 @@ public class ItemController {
 		
 		Category category = categoryService.findById(Long.parseLong(categoryId));
 		Provider provider = providerService.findById(1l);
+		Warehouse warehouse = new Warehouse();
+		warehouse.setId(1l);
+		warehouse.setAddress("ul. one");
 		
 		item.setCategory(category);
 		item.addProvider(provider);
+		item.setWarehouse(warehouse);
 		
 		Item savedItem = itemService.save(item);
 		
 		uiModel.addAttribute("item", savedItem);
+		
+		uiModel.addAttribute("message", new Message("alert alert-success", messageSource.getMessage("edit_page_label_message_sent", new Object[] {}, locale)));
+		//uiModel.addAttribute("message", new Message("alert alert-danger", messageSource.getMessage("edit_page_label_error_sent", new Object[] {}, locale)));
 		
 		return "items/edit";
 	}
