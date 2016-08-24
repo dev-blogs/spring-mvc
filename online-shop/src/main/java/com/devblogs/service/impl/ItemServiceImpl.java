@@ -49,7 +49,15 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	@Transactional(readOnly = false)
 	public Item save(Item item) {
-		return null;
+		if (item.getId() == null) {
+			log.info("Inserting new item");
+			em.persist(item);
+		} else {
+			em.merge(item);
+			log.info("Updating existing item");
+		}
+		log.info("Item saved with id: " + item.getId());
+		return item;
 	}
 
 	@Override

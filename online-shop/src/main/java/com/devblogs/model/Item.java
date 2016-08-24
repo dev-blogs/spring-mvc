@@ -78,6 +78,10 @@ public class Item {
 		return providers;
 	}
 
+	public void addProvider(Provider provider) {
+		this.providers.add(provider);
+	}
+	
 	public void setProviders(Set<Provider> providers) {
 		this.providers = providers;
 	}

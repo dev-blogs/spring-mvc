@@ -32,7 +32,9 @@
 	<spring:url value="/items/view" var="viewDatailsUrl" />
 	<spring:url value="/providers" var="homeUrl" />
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
+	<spring:url value="/items/save" var="saveUrl" />
 	<spring:url value="/items/cart" var="cartUrl" />
+	<spring:url value="/items/edit" var="editUrl" />
 	<spring:url value="/items/removeFromCart" var="removeUrl" />
 	
 	<spring:message code="label_ru_RU" var="labelRuRu" />
@@ -50,16 +52,14 @@
 	
 	<spring:message code="main_page_label_add" var="mainPageLabelAdd" />
 	
-	<spring:message code="cart_page_label_empty" var="cartPageLabelEmpty" />
-	<spring:message code="cart_page_label_item" var="cartPageLabelItem" />
-	<spring:message code="cart_page_label_price" var="cartPageLabelPrice" />
-	<spring:message code="cart_page_label_quantity"	var="cartPageLabelQuantity" />
-	<spring:message code="cart_page_label_subtotal"	var="cartPageLabelSubtotal" />
-	<spring:message code="cart_page_label_description" var="cartPageLabelDescription" />
-	<spring:message code="cart_page_label_total" var="cartPageLabelTotal" />
-	<spring:message code="cart_page_btn_remove" var="cartPageBtnRemove" />
-	<spring:message code="cart_page_btn_continue" var="cartPageBtnContinue" />
-	<spring:message code="cart_page_btn_checkout" var="cartPageBtnCheckout" />
+	<spring:message code="edit_page_label_name" var="editPageLabelName" />
+	<spring:message code="edit_page_ph_name" var="editPagePlaceHolderName" />
+	<spring:message code="edit_page_label_price" var="editPageLabelPrice" />
+	<spring:message code="edit_page_ph_price" var="editPagePlaceHolderPrice" />
+	<spring:message code="edit_page_label_description"	var="editPageLabelDescription" />
+	<spring:message code="edit_page_ph_description"	var="editPagePlaceHolderDescription" />
+	<spring:message code="edit_page_label_provider" var="editPageLabelProvider" />
+	<spring:message code="edit_page_label_warehouse" var="editPageLabelWarehouse" />
 	
 	<spring:message code="main_page_ph_enter_category"
 		var="mainPagePhEnterCategory" />
@@ -82,8 +82,8 @@
 
 <body>
 	<div id="lang">
-		<a href="${cartUrl}?lang=ru_RU">${labelRuRu}</a> | <a
-			href="${cartUrl}?lang=en_US">${labelEnUs}</a>
+		<a href="${editUrl}/${item.id}?lang=ru_RU">${labelRuRu}</a> | <a
+			href="${editUrl}/${item.id}?lang=en_US">${labelEnUs}</a>
 	</div>
 
 	<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
@@ -119,7 +119,8 @@
 						Error! Please check the inputs. (If form error!)</strong>
 				</div>
 			</div>
-			<form role="form" action="" method="post">
+			<form role="form" action="${saveUrl}/${item.id}" method="post" modelAttribute="item">
+				<input type="hidden" id="categoryId" name="categoryId" value="${categoryId}"/>
 				<div class="col-lg-6">
 					<div class="well well-sm">
 						<strong><i
@@ -127,38 +128,24 @@
 							Required Field</strong>
 					</div>
 					<div class="form-group">
-						<label for="InputName">Your Name</label>
+						<label for="InputName">${editPageLabelName}</label>
 						<div class="input-group">
-							<input type="text" class="form-control" name="InputName"
-								id="InputName" placeholder="Enter Name" required> <span
-								class="input-group-addon"><i
-								class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+							<input type="text" class="form-control" name="name" id="name" placeholder="${editPagePlaceHolderName}" value="${item.name}" required> <span
+								class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="InputEmail">Your Email</label>
+						<label for="InputPrice">${editPageLabelPrice}</label>
 						<div class="input-group">
-							<input type="email" class="form-control" id="InputEmail"
-								name="InputEmail" placeholder="Enter Email" required>
-							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+							<input type="text" class="form-control" id="price" name="price" placeholder="${editPagePlaceHolderPrice}" value="${item.price}" required>
+							<span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="InputMessage">Message</label>
+						<label for="InputDescription">${editPageLabelDescription}</label>
 						<div class="input-group">
-							<textarea name="InputMessage" id="InputMessage"
-								class="form-control" rows="5" required></textarea>
-							<span class="input-group-addon"><i
-								class="glyphicon glyphicon-ok form-control-feedback"></i></span>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="InputReal">What is 4+3? (Simple Spam Checker)</label>
-						<div class="input-group">
-							<input type="text" class="form-control" name="InputReal"
-								id="InputReal" required> <span class="input-group-addon"><i
-								class="glyphicon glyphicon-ok form-control-feedback"></i></span>
+							<textarea name="description" id="description" class="form-control" rows="5" value="${item.description}" required></textarea>
+							<span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
 						</div>
 					</div>
 					<input type="submit" name="submit" id="submit" value="Submit"

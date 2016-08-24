@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.devblogs.model.Category;
 import com.devblogs.model.Item;
 import com.devblogs.model.Order;
+import com.devblogs.model.Provider;
 import com.devblogs.model.User;
 import com.devblogs.service.CategoryService;
 import com.devblogs.service.ItemService;
 import com.devblogs.service.OrderService;
+import com.devblogs.service.ProviderService;
 import com.devblogs.service.UserService;
 import com.devblogs.web.form.Message;
 
@@ -39,13 +41,17 @@ public class ItemController {
 	private OrderService orderService;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private ProviderService providerService;
 	
 	@RequestMapping(value= "/edit/{id}", method = RequestMethod.GET)
-	public String edit(@PathVariable("id") Long id, Model uiModel, Locale locale) {
+	public String edit(@PathVariable("id") Long id, Model uiModel, HttpServletRequest request, Locale locale) {
 		logger.info("View item");
+		String categoryId = request.getParameter("categoryId");
 		
 		Item item = itemService.findById(id);
 		uiModel.addAttribute("item", item);
+		uiModel.addAttribute("categoryId", categoryId);
 		
 		return "items/edit";
 	}
@@ -59,6 +65,25 @@ public class ItemController {
 		uiModel.addAttribute("categoryId", categoryId);
 		
 		return "items/view";
+	}
+	
+	@RequestMapping(value= "/save/{id}", method = RequestMethod.POST)
+	public String save(@PathVariable("id") Long id, Item item, Model uiModel, HttpServletRequest request, Locale locale) {
+		logger.info("save item");
+		
+		String categoryId = request.getParameter("categoryId");
+		
+		Category category = categoryService.findById(Long.parseLong(categoryId));
+		Provider provider = providerService.findById(1l);
+		
+		item.setCategory(category);
+		item.addProvider(provider);
+		
+		Item savedItem = itemService.save(item);
+		
+		uiModel.addAttribute("item", savedItem);
+		
+		return "items/edit";
 	}
 	
 	@RequestMapping(value= "/add/{id}", method = RequestMethod.POST)

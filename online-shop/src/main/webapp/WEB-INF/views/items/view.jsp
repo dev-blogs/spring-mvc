@@ -132,6 +132,7 @@
       <hr class="featurette-bottom-divider">
       <sec:authorize access="hasRole('ROLE_ADMIN')">
 	      <form method="GET" action="${editItemUrl}/${item.id}">
+	      	<input type="hidden" id="categoryId" name="categoryId" value="${categoryId}"/>
 	      	<input type="submit" name="Buy" class="btn btn-send btn-primary btn-default" value="${viewPageEditButton}"/>
 	      </form>
 	      	<div class="col-sm-1 col-md-1">
