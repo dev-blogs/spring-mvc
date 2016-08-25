@@ -16,6 +16,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "items")
@@ -43,6 +46,7 @@ public class Item {
 		this.id = id;
 	}
 
+	@NotEmpty(message="{validation.item.name.NotEmpty.message}")
 	@Column(name = "name")
 	public String getName() {
 		return name;
@@ -52,6 +56,7 @@ public class Item {
 		this.name = name;
 	}
 	
+	@NotNull(message="{validation.item.price.NotEmpty.message}")
 	@Column(name = "price")
 	public Double getPrice() {
 		return price;

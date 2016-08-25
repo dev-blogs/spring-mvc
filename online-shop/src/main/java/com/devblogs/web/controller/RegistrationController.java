@@ -46,7 +46,7 @@ public class RegistrationController {
 	@InitBinder
 	public final void initBinderUsuariosFormValidator(final WebDataBinder binder, final Locale locale) {
 	    final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", locale);
-	    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));    
+	    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

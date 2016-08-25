@@ -67,8 +67,8 @@
 ================================================== -->
   <body>
   	<div id="lang">
-   		<a href="${currentViewUrl}/${item.id}?lang=ru_RU">${labelRuRu}</a> | 
-   		<a href="${currentViewUrl}/${item.id}?lang=en_US">${labelEnUs}</a>
+   		<a href="${currentViewUrl}/${item.id}/${categoryId}?lang=ru_RU">${labelRuRu}</a> | 
+   		<a href="${currentViewUrl}/${item.id}/${categoryId}?lang=en_US">${labelEnUs}</a>
    	</div>
     <div class="navbar-wrapper">
       <div class="container">
@@ -131,8 +131,7 @@
 
       <hr class="featurette-bottom-divider">
       <sec:authorize access="hasRole('ROLE_ADMIN')">
-	      <form method="GET" action="${editItemUrl}/${item.id}">
-	      	<input type="hidden" id="categoryId" name="categoryId" value="${categoryId}"/>
+	      <form method="GET" action="${editItemUrl}/${item.id}/${categoryId}">	      	
 	      	<input type="submit" name="Buy" class="btn btn-send btn-primary btn-default" value="${viewPageEditButton}"/>
 	      </form>
 	      	<div class="col-sm-1 col-md-1">

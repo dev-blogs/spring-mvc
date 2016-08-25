@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <html lang="en">
@@ -60,6 +58,7 @@
 	<spring:message code="edit_page_ph_description"	var="editPagePlaceHolderDescription" />
 	<spring:message code="edit_page_label_provider" var="editPageLabelProvider" />
 	<spring:message code="edit_page_label_warehouse" var="editPageLabelWarehouse" />
+	<spring:message code="edit_page_btn_submit"	var="editPageBtnSubmit" />
 	
 	<spring:message code="main_page_ph_enter_category"
 		var="mainPagePhEnterCategory" />
@@ -82,8 +81,8 @@
 
 <body>
 	<div id="lang">
-		<a href="${editUrl}/${item.id}?lang=ru_RU">${labelRuRu}</a> | <a
-			href="${editUrl}/${item.id}?lang=en_US">${labelEnUs}</a>
+		<a href="${editUrl}/${item.id}/${categoryId}?lang=ru_RU">${labelRuRu}</a> | <a
+			href="${editUrl}/${item.id}/${categoryId}?lang=en_US">${labelEnUs}</a>
 	</div>
 
 	<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
@@ -127,26 +126,25 @@
 					<div class="form-group">
 						<label for="InputName">${editPageLabelName}</label>
 						<div class="input-group">
-							<input type="text" class="form-control" name="name" id="name" placeholder="${editPagePlaceHolderName}" value="${item.name}" required> <span
+							<input type="text" class="form-control" name="name" id="name" placeholder="${editPagePlaceHolderName}" value="${item.name}"> <span
 								class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="InputPrice">${editPageLabelPrice}</label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="price" name="price" placeholder="${editPagePlaceHolderPrice}" value="${item.price}" required>
+							<input type="text" class="form-control" id="price" name="price" placeholder="${editPagePlaceHolderPrice}" value="${item.price}">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="InputDescription">${editPageLabelDescription}</label>
 						<div class="input-group">
-							<textarea name="description" id="description" class="form-control" rows="5" required>${item.description}</textarea>
+							<textarea name="description" id="description" class="form-control" rows="5">${item.description}</textarea>
 							<span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span>
 						</div>
 					</div>
-					<input type="submit" name="submit" id="submit" value="Submit"
-						class="btn btn-info pull-right">
+					<input type="submit" name="submit" id="submit" value="${editPageBtnSubmit}" class="btn btn-info pull-right">
 				</div>
 			</form>
 		</div>

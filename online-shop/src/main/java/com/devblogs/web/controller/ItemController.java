@@ -1,16 +1,24 @@
 package com.devblogs.web.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,10 +55,10 @@ public class ItemController {
 	@Autowired
 	private MessageSource messageSource;
 	
-	@RequestMapping(value= "/edit/{id}", method = RequestMethod.GET)
-	public String edit(@PathVariable("id") Long id, Model uiModel, HttpServletRequest request, Locale locale) {
+	@RequestMapping(value= "/edit/{id}/{categoryId}", method = RequestMethod.GET)
+	public String edit(@PathVariable("id") Long id, @PathVariable("categoryId") Long categoryId, Model uiModel, HttpServletRequest request, Locale locale) {
 		logger.info("View item");
-		String categoryId = request.getParameter("categoryId");
+		//String categoryId = request.getParameter("categoryId");
 		
 		Item item = itemService.findById(id);
 		uiModel.addAttribute("item", item);
@@ -71,12 +79,19 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value= "/save/{id}", method = RequestMethod.POST)
-	public String save(@PathVariable("id") Long id, Item item, Model uiModel, HttpServletRequest request, Locale locale) {
+	public String save(@PathVariable("id") Long id, @Valid Item item, BindingResult bindingResult, Model uiModel, HttpServletRequest request, Locale locale) {
 		logger.info("save item");
 		
 		String categoryId = request.getParameter("categoryId");
-		
 		Category category = categoryService.findById(Long.parseLong(categoryId));
+		uiModel.addAttribute("categoryId", categoryId);
+		
+		if (bindingResult.hasErrors()) {
+			uiModel.addAttribute("message", new Message("alert alert-danger", messageSource.getMessage("edit_page_label_error_sent", new Object[] {}, locale)));
+			uiModel.addAttribute("item", item);
+			return "items/edit";
+		}
+		
 		Provider provider = providerService.findById(1l);
 		Warehouse warehouse = new Warehouse();
 		warehouse.setId(1l);
@@ -89,7 +104,6 @@ public class ItemController {
 		Item savedItem = itemService.save(item);
 		
 		uiModel.addAttribute("item", savedItem);
-		
 		uiModel.addAttribute("message", new Message("alert alert-success", messageSource.getMessage("edit_page_label_message_sent", new Object[] {}, locale)));
 		//uiModel.addAttribute("message", new Message("alert alert-danger", messageSource.getMessage("edit_page_label_error_sent", new Object[] {}, locale)));
 		
